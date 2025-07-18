@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adminpanel – Stundenpanel</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🔐 Adminpanel</h1>
+    <p>Eingeloggt als: <strong><%= user.username %> (Admin)</strong></p>
+
+    <nav class="nav-bar">
+      <a href="/dashboard" class="nav-btn">⬅️ Zurück zum Dashboard</a>
+      <a href="/logout" class="nav-btn logout-btn">🚪 Logout</a>
+    </nav>
+
+    <form method="GET" action="/adminpanel" class="filter-form">
+      <div class="form-group inline">
+        <label for="user">👤 Benutzer:</label>
+        <select name="user" id="user">
+          <option value="all">Alle</option>
+          <% users.forEach(u => { %>
+            <option value="<%= u.username %>" <%= selectedUser === u.username ? 'selected' : '' %>><%= u.username %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-group inline">
+        <label for="month">📅 Monat:</label>
+        <select name="month" id="month">
+          <option value="all">Alle</option>
+          <% const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember']; %>
+          <% months.forEach((m, i) => { 
+               const val = (i+1).toString().padStart(2,'0'); %>
+            <option value="<%= val %>" <%= selectedMonth === val ? 'selected' : '' %>><%= m %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-group inline">
+        <label for="year">🗓️ Jahr:</label>
+        <select name="year" id="year">
+          <option value="all">Alle</option>
+          <% years.forEach(y => { %>
+            <option value="<%= y.year %>" <%= selectedYear === y.year ? 'selected' : '' %>><%= y.year %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-btn">🔍 Filtern</button>
+      <a href="/adminpanel" class="reset-btn">🔄 Filter zurücksetzen</a>
+    </form>
+
+    <div class="info-bar">Gefundene Einträge: <%= entries.length %></div>
+
+    <% if (selectedUser !== 'all' && entries.length > 0) { %>
+      <div class="highlight">
+        👤 <strong><%= selectedUser %></strong>
+        <% if (selectedMonth !== 'all') { %> im <strong><%= months[parseInt(selectedMonth, 10) - 1] %></strong> <% } %>
+        <% if (selectedYear !== 'all') { %> <span>– <strong><%= selectedYear %></strong></span> <% } %>
+        ➡️ <strong><%= totalHours %> Stunden</strong> insgesamt.
+      </div>
+    <% } %>
+
+    <% if (entries.length > 0) { %>
+      <table class="entries-table">
+        <thead>
+          <tr>
+            <th>👤 Benutzer</th>
+            <th>📅 Datum</th>
+            <th>⏱️ Stunden</th>
+            <th>📝 Beschreibung</th>
+            <th>🗑️ Aktion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% entries.forEach(entry => { %>
+            <tr>
+              <td><%= entry.username %></td>
+              <td><%= entry.date %></td>
+              <td><%= entry.hours %></td>
+              <td><%= entry.description %></td>
+              <td>
+                <form method="POST" action="/eintrag-loeschen" onsubmit="return confirm('Eintrag wirklich löschen?');">
+                  <input type="hidden" name="id" value="<%= entry.id %>" />
+                  <button type="submit" class="delete-btn">Löschen</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } else { %>
+      <p class="no-entries">⚠️ Keine Einträge gefunden für diese Filter.</p>
+    <% } %>
+  </div>
+</body>
+</html>

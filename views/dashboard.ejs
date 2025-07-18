@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – Stundenpanel</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="dashboard-header">
+      <h1>👋 Willkommen, <%= user.username %>!</h1>
+      <p>Du bist eingeloggt als <strong><%= user.role %></strong>.</p>
+      <nav class="nav-bar">
+        <a href="/stunden-eintragen" class="nav-btn">➕ Stunden eintragen</a>
+        <% if (user.role === 'admin') { %>
+          <a href="/adminpanel" class="nav-btn">🔐 Adminpanel</a>
+        <% } %>
+        <a href="/logout" class="nav-btn logout-btn">🚪 Logout</a>
+      </nav>
+    </header>
+
+    <section class="entries-section">
+      <h2>📋 Deine bisherigen Einträge</h2>
+      <% if (entries && entries.length > 0) { %>
+        <table class="entries-table">
+          <thead>
+            <tr>
+              <th>📅 Datum</th>
+              <th>⏱️ Stunden</th>
+              <th>📝 Beschreibung</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% entries.forEach(entry => { %>
+              <tr>
+                <td><%= entry.date %></td>
+                <td><%= entry.hours %></td>
+                <td><%= entry.description %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p class="no-entries">⚠️ Du hast noch keine Einträge gemacht.</p>
+      <% } %>
+    </section>
+  </div>
+</body>
+</html>
