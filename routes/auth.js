@@ -6,12 +6,16 @@ const router = express.Router();
 const db = new sqlite3.Database('./db/database.sqlite');
 
 // Registrierungsseite
-router.get('/register', (req, res) => {
-  res.render('register');
-});
+  const SECRET_REGISTER_PATH = '/reg177d8ASDA';
 
-// Registrierung abschicken
-router.post('/register', (req, res) => {
+  // Registrierungsseite unter geheimer URL
+  router.get(SECRET_REGISTER_PATH, (req, res) => {
+    res.render('register', { path: SECRET_REGISTER_PATH });
+  });
+
+  // Registrierung abschicken
+  router.post(SECRET_REGISTER_PATH, (req, res) => {
+
   const { username, password } = req.body;
   const hash = bcrypt.hashSync(password, 10);
 
