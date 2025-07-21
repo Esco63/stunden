@@ -48,44 +48,38 @@
   </div>
 
   <!-- Modal -->
-  <div id="stundenModal" class="modal">
+  <div id="stundenModal" class="modal-overlay">
     <div class="modal-content">
-      <h2 style="margin-bottom: 16px;">🕒 Stunden eintragen</h2>
-      <form class="hours-form" method="POST" action="/stunden-eintragen">
-        <div class="form-group">
-          <label for="date">Datum</label>
-          <input type="date" name="date" id="date" required />
-        </div>
-        <div class="form-group">
-          <label for="hours">Stunden</label>
-          <input type="number" name="hours" id="hours" step="0.1" required />
-        </div>
-        <div class="form-group">
-          <label for="description">Beschreibung</label>
-          <textarea name="description" id="description" rows="3" required></textarea>
-        </div>
+      <h2>🕒 Stunden eintragen</h2>
+      <form method="POST" action="/stunden-eintragen">
+        <input type="date" name="date" required />
+        <input type="number" name="hours" step="0.1" placeholder="Stunden" required />
+        <textarea name="description" rows="3" placeholder="Beschreibung (optional)"></textarea>
         <button type="submit" class="submit-btn">💾 Speichern</button>
-        <button type="button" onclick="closeModal()" style="margin-left: 12px;" class="submit-btn logout-btn">Abbrechen</button>
+        <button type="button" onclick="closeModal()" class="cancel-btn">Abbrechen</button>
       </form>
     </div>
   </div>
 
   <script>
     function openModal() {
-      document.getElementById('stundenModal').style.display = 'flex';
+      document.getElementById("stundenModal").classList.add("active");
     }
 
     function closeModal() {
-      document.getElementById('stundenModal').style.display = 'none';
+      document.getElementById("stundenModal").classList.remove("active");
     }
 
-    // Optional: Modal schließen, wenn außerhalb geklickt
-    window.onclick = function (event) {
-      const modal = document.getElementById('stundenModal');
-      if (event.target === modal) {
-        closeModal();
-      }
-    };
+    // ESC zum Schließen
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    // Klick außerhalb schließt Modal
+    window.addEventListener("click", (e) => {
+      const modal = document.getElementById("stundenModal");
+      if (e.target === modal) closeModal();
+    });
   </script>
 </body>
 </html>

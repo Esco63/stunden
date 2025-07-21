@@ -328,3 +328,97 @@ body {
     font-size: 15px;
   }
 }
+/* Modal-Stil */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  animation: fadeInScale 0.25s ease;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content h2 {
+  margin-bottom: 16px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #f8fafc;
+}
+
+.modal-content .submit-btn,
+.modal-content .cancel-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-content .cancel-btn {
+  background: linear-gradient(to right, #e5e7eb, #d1d5db);
+  color: #1f2937;
+}
+
+.modal-content .cancel-btn:hover {
+  background: linear-gradient(to right, #d1d5db, #9ca3af);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 20px 16px;
+  }
+
+  .modal-content h2 {
+    font-size: 20px;
+  }
+
+  .modal-content input,
+  .modal-content textarea {
+    font-size: 15px;
+  }
+}
