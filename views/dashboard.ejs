@@ -12,7 +12,7 @@
       <h1>👋 Willkommen, <%= user.username %>!</h1>
       <p>Du bist eingeloggt als <strong><%= user.role %></strong>.</p>
       <nav class="nav-bar">
-        <a href="/stunden-eintragen" class="nav-btn">➕ Stunden eintragen</a>
+        <button class="nav-btn" onclick="openModal()">➕ Stunden eintragen</button>
         <% if (user.role === 'admin') { %>
           <a href="/adminpanel" class="nav-btn">🔐 Adminpanel</a>
         <% } %>
@@ -46,5 +46,46 @@
       <% } %>
     </section>
   </div>
+
+  <!-- Modal -->
+  <div id="stundenModal" class="modal">
+    <div class="modal-content">
+      <h2 style="margin-bottom: 16px;">🕒 Stunden eintragen</h2>
+      <form class="hours-form" method="POST" action="/stunden-eintragen">
+        <div class="form-group">
+          <label for="date">Datum</label>
+          <input type="date" name="date" id="date" required />
+        </div>
+        <div class="form-group">
+          <label for="hours">Stunden</label>
+          <input type="number" name="hours" id="hours" step="0.1" required />
+        </div>
+        <div class="form-group">
+          <label for="description">Beschreibung</label>
+          <textarea name="description" id="description" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">💾 Speichern</button>
+        <button type="button" onclick="closeModal()" style="margin-left: 12px;" class="submit-btn logout-btn">Abbrechen</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('stundenModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('stundenModal').style.display = 'none';
+    }
+
+    // Optional: Modal schließen, wenn außerhalb geklickt
+    window.onclick = function (event) {
+      const modal = document.getElementById('stundenModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  </script>
 </body>
 </html>
