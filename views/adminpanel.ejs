@@ -16,6 +16,7 @@
       <a href="/logout" class="nav-btn logout-btn">🚪 Logout</a>
     </nav>
 
+    <!-- Filter -->
     <form method="GET" action="/adminpanel" class="filter-form">
       <div class="form-group inline">
         <label for="user">👤 Benutzer:</label>
@@ -64,6 +65,7 @@
       </div>
     <% } %>
 
+    <!-- Tabelle -->
     <% if (entries.length > 0) { %>
       <table class="entries-table">
         <thead>
